@@ -16,12 +16,10 @@ const Form = () => {
     ]
   });
 
-  // 🔹 Handle normal fields
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // 🔹 Handle address fields
   const handleAddressChange = (e, type) => {
     setForm({
       ...form,
@@ -32,7 +30,6 @@ const Form = () => {
     });
   };
 
-  // 🔹 Checkbox (copy address)
   const handleCheckbox = () => {
     if (!form.sameAsResidential) {
       setForm({
@@ -49,7 +46,6 @@ const Form = () => {
     }
   };
 
-  // 🔹 Handle documents
   const handleDocChange = (i, field, value) => {
     const docs = [...form.documents];
     docs[i][field] = value;
@@ -71,7 +67,6 @@ const Form = () => {
     setForm({ ...form, documents: docs });
   };
 
-  // 🔹 Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -107,11 +102,11 @@ const Form = () => {
 
       formData.append("data", JSON.stringify(form));
 
-      const res = await fetch("http://localhost:5000/api/form", {
-        method: "POST",
-        body: formData
+  const API_URL =import.meta.env.VITE_API_URL || "http://localhost:5000";      
+      const res = await fetch(`${API_URL}/api/form`, {
+      method: "POST",
+      body: formData
       });
-
       const text = await res.text();
       console.log("Response:", text);
 
